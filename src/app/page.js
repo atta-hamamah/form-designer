@@ -175,7 +175,7 @@ function FormDesigner() {
   }
 
   return (
-    <main style={lang === 'arabic' ? dir : {}} className=" bg-slate-200 w-full select-none items-start p-6">
+    <main style={lang === 'arabic' ? dir : {}} className=" bg-slate-100 w-full select-none items-start p-6 min-w-[770px]">
       <div className=" pb-6 border-b border-gray-400 flex items-center justify-between ">
         <div className=" ">
           {lang === 'english' &&
@@ -200,7 +200,7 @@ function FormDesigner() {
           </p>
         </div>
       </div>
-      <div className=" flex flex-wrap w-full items-start justify-start pl-4 pt-4 ">
+      <div className="flex flex-wrap w-full items-start justify-start pl-4 pt-4 ">
         {(formM && !user) &&
           <div className=" z-10 absolute flex justify-center items-center top-0 left-0 w-full h-screen bg-black bg-opacity-50 ">
             <div className=" flex-wrap absolute flex border-2 border-gray-600 p-4 bg-white rounded-lg w-72 ">
@@ -229,7 +229,7 @@ function FormDesigner() {
           </div>
         }
         {(discM && !user) &&
-          <div className=" z-10 absolute flex justify-center items-center top-0 left-0 w-full h-screen bg-black bg-opacity-50 ">
+          <div className="  z-10 absolute flex justify-center items-center top-0 left-0 w-full h-screen bg-black bg-opacity-50 ">
             <div className=" flex-wrap absolute flex border-2 border-gray-600 p-4 bg-white rounded-lg w-72 ">
               <input value={formDesc}
                 onChange={(event) => {
@@ -253,7 +253,7 @@ function FormDesigner() {
             </div>
           </div>
         }
-        <div className=" border-b mb-6 border-gray-400  w-full ">
+        <div className=" min-h-[305px] border-b mb-6 border-gray-400  w-full ">
           <div className=" w-full p-4 pb-0 ">
             <div className=" w-fit ">
               <div
@@ -273,157 +273,161 @@ function FormDesigner() {
             >{formDesc || (lang === 'arabic' ? 'أضف وصف الإستمارة' : 'Add Form Description')}</div>
           </div>
           <div className={` ${user ? ' caret-transparent ' : ''} flex flex-wrap w-full `}>
-            <form className="relative  grid h-full w-full grid-cols-6 gap-x-6 p-2 pb-16">
-              {inputs.map((e, i) => (
-                <div
-                  id={e.id}
-                  onClick={() => setId(e.id)}
-                  onMouseEnter={() => { setShowDelete(i); setId(e.id) }}
-                  onMouseLeave={() => setShowDelete(null)}
-                  className={` 
+            {
+              inputs.length ?
+                <form className="relative  grid h-full w-full grid-cols-6 gap-x-6 p-2 pb-16">
+                  {inputs.map((e, i) => (
+                    <div
+                      id={e.id}
+                      onClick={() => setId(e.id)}
+                      onMouseEnter={() => { setShowDelete(i); setId(e.id) }}
+                      onMouseLeave={() => setShowDelete(null)}
+                      className={` 
                     ${(e.type === "text" && e.size === "small") || e.type === 'date' || e.type === 'time'
-                      ? " col-span-1 "
-                      : " col-span-2 "
-                    }
+                          ? " col-span-1 "
+                          : " col-span-2 "
+                        }
                     ${e.kind === "title" ? " col-span-6 " : ""}
                     ${e.kind === "title" && e.size === 'small' ? " mt-0 " : "mt-3"}
                     relative hover:bg-purple-100 duration-300 p-1 rounded-md w-full `}
-                  key={i}
-                >
-                  {(showDelete === i && !user) && (
-                    <RiDeleteBin5Line
-                      onClick={() => deleteInput(e.id)}
-                      className={` ${lang === 'arabic' ? ' left-0 ' : ' right-0'} absolute top-1 cursor-pointer text-red-400 `}
-                    />
-                  )}
-                  {e.kind === "title" && (
-                    <input
-                      disabled={user}
-                      value={e.value}
-                      placeholder={lang === 'arabic' ? 'إضافة نص' : "Add text"}
-                      className={`  ${e.kind === "title" && e.size === "small"
-                        ? " text-base "
-                        : "text-2xl"
-                        }
-                        min-w-[70px]  bg-transparent text-2xl text-gray-400 outline-none`}
-                      onChange={(event) => {
-                        event.target.style.width = `${event.target.value.length * 17
-                          }px `;
-                        if (lang === 'arabic') {
-                          if (arabicChar.test(event.target.value)) changeInputValue(event, e.id)
-                        } else {
-                          changeInputValue(event, e.id)
-                        }
-                      }}
-                    ></input>
-                  )}
-                  {e.type === "text" && (
-                    <>
-                      <input
-                        disabled={user}
-                        value={e.name}
-                        onChange={(event) => {
-                          if (lang === 'arabic') {
-                            if (arabicChar.test(event.target.value)) changeInputName(event, e.id)
-                          } else {
-                            changeInputName(event, e.id)
-                          }
-                        }}
-                        placeholder={lang === 'arabic' ? 'أضف إسم العنصر' : "Add label"}
-                        className=" ml-1 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-gray-400  outline-none"
-                      ></input>
-                      <input
-                        name={e.name}
-                        value={e.value}
-                        type={e.type}
-                        onChange={(event) => changeInputValue(event, e.id)}
-                        className="mt-1  caret-gray-400  h-10 w-full rounded-md border-2 border-gray-400  outline-none"
-                      ></input>
-                    </>
-                  )}
-                  {(e.type === "date" || e.type === "time") && (
-                    <>
-                      <input
-                        disabled={user}
-                        value={e.name}
-                        onChange={(event) => {
-                          if (lang === 'arabic') {
-                            if (arabicChar.test(event.target.value)) changeInputName(event, e.id)
-                          } else {
-                            changeInputName(event, e.id)
-                          }
-                        }}
-                        placeholder={lang === 'arabic' ? 'أضف إسم العنصر' : "Add label"}
-                        className=" ml-1 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-gray-400  outline-none"
-                      ></input>
-                      <label>
+                      key={i}
+                    >
+                      {(showDelete === i && !user) && (
+                        <RiDeleteBin5Line
+                          onClick={() => deleteInput(e.id)}
+                          className={` ${lang === 'arabic' ? ' left-0 ' : ' right-0'} absolute top-1 cursor-pointer text-red-400 `}
+                        />
+                      )}
+                      {e.kind === "title" && (
                         <input
-                          name={e.name}
-                          onChange={(event) => changeInputValue(event, e.id)}
+                          disabled={user}
                           value={e.value}
-                          type={e.type}
-                          className="mt-1 h-10 w-full rounded-md border-2 border-gray-400  outline-none"
+                          placeholder={lang === 'arabic' ? 'إضافة نص' : "Add text"}
+                          className={`  ${e.kind === "title" && e.size === "small"
+                            ? " text-base "
+                            : "text-2xl"
+                            }
+                        min-w-[70px]  bg-transparent text-2xl text-gray-400 outline-none`}
+                          onChange={(event) => {
+                            event.target.style.width = `${event.target.value.length * 17
+                              }px `;
+                            if (lang === 'arabic') {
+                              if (arabicChar.test(event.target.value)) changeInputValue(event, e.id)
+                            } else {
+                              changeInputValue(event, e.id)
+                            }
+                          }}
                         ></input>
-                      </label>
-                    </>
-                  )}
-                  {e.type === 'group' && (
-                    <>
-                      <input
-                        disabled={user}
-                        value={e.name}
-                        onChange={(event) => {
-                          if (lang === 'arabic') {
-                            if (arabicChar.test(event.target.value)) changeInputName(event, e.id)
-                          } else {
-                            changeInputName(event, e.id)
-                          }
-                        }
-                        }
-                        placeholder={lang === 'arabic' ? 'أضف إسم المجموعة' : "Add group label"}
-                        className=" ml-1 mb-2 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-[#a4a0bc]  outline-none"
-                      ></input>
-                      {e.options.map((ele, i) => (
-                        <label
-                          onMouseEnter={() => showRadioDelete(ele.id)}
-                          onMouseLeave={() => showRadioDelete(null)}
-                          key={i}
-                          className=" flex items-center justify-between text-gray-400"
-                        >
-                          {(radioDelete === ele.id && !user) && (
-                            <RiDeleteBin5Line
-                              onClick={() => deleteRadio(e.id, ele.id)}
-                              className=' false ? " right-0 top-1 cursor-pointer text-red-400 '
-                            />
-                          )}
+                      )}
+                      {e.type === "text" && (
+                        <>
                           <input
                             disabled={user}
-                            value={ele.value}
+                            value={e.name}
                             onChange={(event) => {
                               if (lang === 'arabic') {
-                                if (arabicChar.test(event.target.value)) changeRadioValue(event, e.id, ele.id)
+                                if (arabicChar.test(event.target.value)) changeInputName(event, e.id)
                               } else {
-                                changeRadioValue(event, e.id, ele.id)
+                                changeInputName(event, e.id)
                               }
                             }}
-                            placeholder={lang === 'arabic' ? 'أضف إسم الأختيار' : "Add option label"}
-                            className="  ml-1 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-[#5c596c] outline-none"
+                            placeholder={lang === 'arabic' ? 'أضف إسم العنصر' : "Add label"}
+                            className=" ml-1 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-gray-400  outline-none"
                           ></input>
                           <input
-                            onChange={() => changeSelectedRadio(e.id, ele.id)}
-                            type={"radio"}
-                            checked={e.value === ele.value}
-                            className=""
+                            name={e.name}
+                            value={e.value}
+                            type={e.type}
+                            onChange={(event) => changeInputValue(event, e.id)}
+                            className="mt-1  caret-gray-400  h-10 w-full rounded-md border-2 border-gray-400  outline-none"
                           ></input>
-                        </label>
-                      ))}
-                      {!user && <p className=" text-gray-500 m-auto w-fit text-sm font-bold text hover:text-gray-600 duration-100 mt-2 cursor-pointer" onClick={() => { addRadio(chosenId) }}>{lang === 'arabic' ? 'إضافة إختيار' : "Add Option"}</p>}
-                    </>
-                  )}
-                </div>
-              ))}
-            </form>
-
+                        </>
+                      )}
+                      {(e.type === "date" || e.type === "time") && (
+                        <>
+                          <input
+                            disabled={user}
+                            value={e.name}
+                            onChange={(event) => {
+                              if (lang === 'arabic') {
+                                if (arabicChar.test(event.target.value)) changeInputName(event, e.id)
+                              } else {
+                                changeInputName(event, e.id)
+                              }
+                            }}
+                            placeholder={lang === 'arabic' ? 'أضف إسم العنصر' : "Add label"}
+                            className=" ml-1 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-gray-400  outline-none"
+                          ></input>
+                          <label>
+                            <input
+                              name={e.name}
+                              onChange={(event) => changeInputValue(event, e.id)}
+                              value={e.value}
+                              type={e.type}
+                              className="mt-1 h-10 w-full rounded-md border-2 border-gray-400  outline-none"
+                            ></input>
+                          </label>
+                        </>
+                      )}
+                      {e.type === 'group' && (
+                        <>
+                          <input
+                            disabled={user}
+                            value={e.name}
+                            onChange={(event) => {
+                              if (lang === 'arabic') {
+                                if (arabicChar.test(event.target.value)) changeInputName(event, e.id)
+                              } else {
+                                changeInputName(event, e.id)
+                              }
+                            }
+                            }
+                            placeholder={lang === 'arabic' ? 'أضف إسم المجموعة' : "Add group label"}
+                            className=" ml-1 mb-2 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-[#a4a0bc]  outline-none"
+                          ></input>
+                          {e.options.map((ele, i) => (
+                            <label
+                              onMouseEnter={() => showRadioDelete(ele.id)}
+                              onMouseLeave={() => showRadioDelete(null)}
+                              key={i}
+                              className=" flex items-center justify-between text-gray-400"
+                            >
+                              {(radioDelete === ele.id && !user) && (
+                                <RiDeleteBin5Line
+                                  onClick={() => deleteRadio(e.id, ele.id)}
+                                  className=' false ? " right-0 top-1 cursor-pointer text-red-400 '
+                                />
+                              )}
+                              <input
+                                disabled={user}
+                                value={ele.value}
+                                onChange={(event) => {
+                                  if (lang === 'arabic') {
+                                    if (arabicChar.test(event.target.value)) changeRadioValue(event, e.id, ele.id)
+                                  } else {
+                                    changeRadioValue(event, e.id, ele.id)
+                                  }
+                                }}
+                                placeholder={lang === 'arabic' ? 'أضف إسم الأختيار' : "Add option label"}
+                                className="  ml-1 w-full min-w-[30px] rounded-md bg-transparent pr-4 text-[#5c596c] outline-none"
+                              ></input>
+                              <input
+                                onChange={() => changeSelectedRadio(e.id, ele.id)}
+                                type={"radio"}
+                                checked={e.value === ele.value}
+                                className=""
+                              ></input>
+                            </label>
+                          ))}
+                          {!user && <p className=" text-gray-500 m-auto w-fit text-sm font-bold text hover:text-gray-600 duration-100 mt-2 cursor-pointer" onClick={() => { addRadio(chosenId) }}>{lang === 'arabic' ? 'إضافة إختيار' : "Add Option"}</p>}
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </form>
+                :
+                <p className='w-full h-44 font-semibold text-gray-300 text-2xl flex items-center justify-center'>{lang === 'arabic' ? 'لا يوجد عناصر فى الاستمارة' : 'No Elements Added To Form'}</p>
+            }
           </div>
         </div>
         <div className=" flex justify-between items-center w-full ">
@@ -436,7 +440,7 @@ function FormDesigner() {
                   confirmDesign()
                 }
               }}
-              className=" relative w-44 cursor-pointer rounded-lg border-2 border-gray-600 p-4 text-center font-semibold text-gray-600 duration-300 hover:bg-gray-600 hover:text-white ">
+              className=" relative w-48 cursor-pointer rounded-lg border-2 border-gray-600 p-4 text-center font-semibold text-gray-600 duration-300 hover:bg-gray-600 hover:text-white ">
               {user ? 'BACK TO DESIGNER' : 'CONFIRM DESIGN'}
               <span className=" left-0 absolute -bottom-4 h-1 w-full border-b border-gray-600"></span>
             </div>
