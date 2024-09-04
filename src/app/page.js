@@ -18,7 +18,7 @@ function FormDesigner() {
   const [user, setUser] = useState(false)
   const [warning, setWarning] = useState(false)
   const [formDesc, setDesc] = useState('')
-  const [discM, showDiscM] = useState(false)
+  const [descM, showdescM] = useState(false)
   const [addElements, setAddElements] = useState(false)
   const [hover, setHover] = useState(null)
 
@@ -166,6 +166,12 @@ function FormDesigner() {
     }
     setInputs(newState);
   }
+  if (warning || formM || descM) {
+    window.scrollTo(0, 0);
+    document.body.classList.add('overflow-hidden');
+  } else {
+    document.body.classList.remove('overflow-hidden');
+  }
   function confirmDesign() {
     if (formName && formDesc && inputs.length) {
       setUser(true)
@@ -228,7 +234,7 @@ function FormDesigner() {
             </div>
           </div>
         }
-        {(discM && !user) &&
+        {(descM && !user) &&
           <div className="  z-10 absolute flex justify-center items-center top-0 left-0 w-full h-screen bg-black bg-opacity-50 ">
             <div className=" flex-wrap absolute flex border-2 border-gray-600 p-4 bg-white rounded-lg w-72 ">
               <input value={formDesc}
@@ -244,7 +250,7 @@ function FormDesigner() {
               </input>
               <div className=" mt-8  w-full gap-12 flex items-center justify-center">
                 <button
-                  onClick={() => showDiscM(false)}
+                  onClick={() => showdescM(false)}
                   className="w-24 rounded border border-gray-600 p-2 text-center font-semibold text-gray-600 duration-300 hover:bg-gray-600 hover:text-white "
                 >
                   {lang === 'arabic' ? 'تأكيد' : "Confirm"}
@@ -268,7 +274,7 @@ function FormDesigner() {
               </div>
             </div>
             <div
-              onClick={() => { if (!user) showDiscM(true) }}
+              onClick={() => { if (!user) showdescM(true) }}
               className=" cursor-pointer mt-4 w-full text-lg font-semibold text-gray-400"
             >{formDesc || (lang === 'arabic' ? 'أضف وصف الإستمارة' : 'Add Form Description')}</div>
           </div>
@@ -575,7 +581,7 @@ function FormDesigner() {
         </div>
       </div>
       {warning &&
-        <div className=" z-10 absolute flex justify-center items-center top-0 left-0 w-full h-screen bg-black bg-opacity-50 ">
+        <div className=" z-10 absolute flex justify-center items-center top-0 left-0 w-full h-full bg-black bg-opacity-50 ">
           <div className=" flex-wrap absolute flex border-2 border-gray-600 p-4 bg-white rounded-lg w-96 ">
             <div className=' font-semibold text-gray-500 text-center flex items-center justify-center w-full '>
               <p className=' w-fit'>
