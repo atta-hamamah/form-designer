@@ -167,13 +167,13 @@ function FormDesigner() {
     setInputs(newState);
   }
   useEffect(() => {
+    if (warning || formM || descM) {
+      window.scrollTo(0, 0);
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
   }, [warning, formM, descM])
-  if (warning || formM || descM) {
-    window.scrollTo(0, 0);
-    document.body.classList.add('overflow-hidden');
-  } else {
-    document.body.classList.remove('overflow-hidden');
-  }
   function confirmDesign() {
     if (formName && formDesc && inputs.length) {
       setUser(true)
