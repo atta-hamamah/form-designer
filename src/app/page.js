@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { FaTextWidth } from 'react-icons/fa';
 import { TbListDetails } from 'react-icons/tb';
@@ -166,6 +166,8 @@ function FormDesigner() {
     }
     setInputs(newState);
   }
+  useEffect(() => {
+  }, [warning, formM, descM])
   if (warning || formM || descM) {
     window.scrollTo(0, 0);
     document.body.classList.add('overflow-hidden');
