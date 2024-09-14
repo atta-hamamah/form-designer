@@ -434,7 +434,7 @@ function FormDesigner() {
                   ))}
                 </form>
                 :
-                <p className='w-full h-12 font-semibold text-gray-300 text-2xl flex items-center justify-center'>
+                <p className='w-full h-20 font-semibold text-gray-300 text-2xl flex items-center justify-center'>
                   {lang === 'arabic' ? 'لا يوجد عناصر فى الاستمارة' : 'No Elements Added To Form'}
                 </p>
             }
