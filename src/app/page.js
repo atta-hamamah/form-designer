@@ -261,7 +261,7 @@ function FormDesigner() {
             </div>
           </div>
         }
-        <div className={`${user ? 'min-h-[469px] ' : 'min-h-[305px] '} border-b mb-6 border-gray-400  w-full "`}>
+        <div className={`${user ? 'min-h-[calc(100vh-234px)]' : ' min-h-[calc(100vh-399px)]'} border-b mb-6 border-gray-400  w-full "`}>
           <div className=" w-full p-4 pb-0 ">
             <div className=" w-fit ">
               <div
@@ -434,7 +434,9 @@ function FormDesigner() {
                   ))}
                 </form>
                 :
-                <p className='w-full h-44 font-semibold text-gray-300 text-2xl flex items-center justify-center'>{lang === 'arabic' ? 'لا يوجد عناصر فى الاستمارة' : 'No Elements Added To Form'}</p>
+                <p className='w-full h-44 font-semibold text-gray-300 text-2xl flex items-center justify-center'>
+                  {lang === 'arabic' ? 'لا يوجد عناصر فى الاستمارة' : 'No Elements Added To Form'}
+                </p>
             }
           </div>
         </div>
