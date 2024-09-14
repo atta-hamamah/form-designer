@@ -261,7 +261,7 @@ function FormDesigner() {
             </div>
           </div>
         }
-        <div className={`${user ? 'min-h-[calc(100vh-236px)]' : ' min-h-[calc(100vh-399px)]'} border-b mb-6 border-gray-400  w-full "`}>
+        <div className={`${user ? 'min-h-[calc(100vh-236px)]' : ' min-h-[calc(100vh-401px)]'} border-b mb-6 border-gray-400  w-full "`}>
           <div className=" w-full p-4 pb-0 ">
             <div className=" w-fit ">
               <div
